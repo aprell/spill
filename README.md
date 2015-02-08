@@ -3,7 +3,7 @@ spill
 
 spill is a tiny stack-based programming language borrowing ideas from Forth
 and Factor. The interpreter is written in the
-[MoonScript][1](http://moonscript.org) dialect of Lua.
+[MoonScript](http://moonscript.org) dialect of Lua.
 
 spill is meant for learning and messing around. You should not attempt to use it
 for anything serious.
