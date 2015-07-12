@@ -1,6 +1,5 @@
 import tokenize, parse, eval from require "spill"
 import words from require "builtin"
-require "prelude"
 
 interpret = (filename) ->
 	file = assert(io.open filename)
@@ -21,6 +20,7 @@ repl = (prompt = "spill> ") ->
 			io.write "Data stack: ", words.dump ds
 
 main = (...) ->
+	interpret "prelude.spl"
 	args = {...}
 	if #args > 0 then interpret args[1] else repl!
 

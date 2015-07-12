@@ -1,0 +1,81 @@
+( Conditionals )
+(   10 0 > if "pos" else "neg" then . )
+
+( Loops )
+(   10 begin dup . 1 - dup 0 = until clear "ZERO" . )
+(   1 begin dup factorial . 1 + dup 10 > until clear )
+
+: inc 1 + ;
+
+: dec 1 - ;
+
+: neg 0 swap - ;
+
+: sq 2 ^ ;
+
+: sqrt 0.5 ^ ;
+
+: cube dup square * ;
+
+: even? 2 % 0 = ;
+
+: odd? 2 % 0 != ;
+
+: mult? % 0 = ;
+
+: factorial
+  dup 1 > if
+    dup 1 - factorial *
+  then
+;
+
+: [a,b] 1 range ;
+
+: [a,b) 1 - 1 range ;
+
+: (a,b] [ 1 + ] dip 1 range ;
+
+: (a,b) [ 1 + ] [ 1 - ] bi* 1 range ;
+
+: spill [ ] each ;
+
+: first 1 !! ;
+
+: second 2 !! ;
+
+: third 3 !! ;
+
+: last dup length !! ;
+
+: apply 1 swap times ;
+
+( { 1 2 3 } [ 2 * ] map )
+: map
+  [ dup length ] dip swap
+  [ [ each ] ] dip
+  [ apply ] dip
+  mkseq
+;
+
+( { 1 2 3 } [ + ] fold )
+: fold
+  [ dup length 1 - [ spill ] dip ] dip
+  times
+;
+
+: sum [ + ] fold ;
+
+: product [ * ] fold ;
+
+( : mean dup sum swap length / ; )
+: mean [ sum ] [ length ] bi / ;
+
+: fizzbuzz
+  dup 15 mult? if drop "FizzBuzz" . else
+	dup 3 mult? if drop "Fizz" . else
+	  dup 5 mult? if drop "Buzz" . else . then
+    then
+  then
+;
+
+: 2dip swap [ dip ] dip ;
