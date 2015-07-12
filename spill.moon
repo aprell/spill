@@ -12,13 +12,17 @@ tokens = {
 	END:    "end"
 }
 
-NUMBER = "[%+%-]?%d+%.*%d* "
-STRING = "\".-\""
-WORD   = "[^\"']%S*"
+COMMENT = "%(%s+.-%s+%)"
+NUMBER  = "[%+%-]?%d+%.*%d* "
+STRING  = "\".-\""
+WORD    = "[^\"']%S*"
 
 next_token = (input) ->
 	-- Skip whitespace
 	input = gsub input, "^%s*", ""
+	-- Skip comment
+	if cmt = match input, "^"..COMMENT
+		return next_token sub(input, #cmt+1)
 	if tok = match input, "^"..NUMBER
 		return tokens.NUMBER, tonumber(tok), sub(input, #tok+1)
 	if tok = match input, "^"..STRING
