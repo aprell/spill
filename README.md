@@ -11,7 +11,7 @@ for anything serious.
 Examples
 --------
 
-Make sure to have MoonScript installed before starting the primitive REPL with
+Make sure to have MoonScript installed before starting the REPL with
 `./spill.sh`.
 
 Say hello:
@@ -57,7 +57,7 @@ spill> clear
 Data stack: []
 ```
 
-Check `prelude.moon` for more examples.
+Check `prelude.spl` for more examples.
 
 TODO
 ----
