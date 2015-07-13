@@ -10,4 +10,4 @@ if [ "$(which moon)" = "" ]; then
 	exit 2
 fi
 
-moon repl.moon "$@"
+moon main.moon "$@"
