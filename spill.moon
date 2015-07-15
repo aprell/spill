@@ -13,7 +13,7 @@ tokens = {
 }
 
 COMMENT = "%(%s+.-%s+%)"
-NUMBER  = "[%+%-]?%d+%.*%d* "
+NUMBER  = "[%+%-]?%d+%.*%d*%f[^%w%p]"
 STRING  = "\".-\""
 WORD    = "[^\"']%S*"
 
