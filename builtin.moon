@@ -114,8 +114,6 @@ builtin_words = {
 	cr: -> io.write "\n"
 	-- Number of elements of data stack
 	elems: (s) -> s\push #s.elems
-	-- Display contents of data stack
-	dump: (s) -> s\dump!
 	-- Push data onto stack
 	__push: (s, d) -> s\push d
 	-- Conditional branch: branch on false

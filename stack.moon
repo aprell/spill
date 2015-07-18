@@ -1,16 +1,12 @@
+import concat from require "util"
+
 class Stack
 	new: => @elems = {}
 	push: (val) => @elems[#@elems+1] = val
 	pop: => table.remove(@elems)
 	top: => @elems[#@elems]
 	isempty: => #@elems == 0
-	dump: =>
-		s = "["
-		for i = 1, #@elems
-			s ..= tostring @elems[i]
-			s ..= ", " unless i == #@elems
-		s ..= "]\n"
-		return s
+	dump: => "[#{concat @elems, ", "}]"
 
 class Queue extends Stack
 	enq: (val) => @push val

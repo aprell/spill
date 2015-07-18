@@ -17,7 +17,7 @@ repl = (prompt = "spill> ") ->
 			break
 		if #inp > 0
 			io.write eval parse tokenize inp
-			io.write "Data stack: ", words.dump ds
+			io.write "Data stack: ", ds\dump!, "\n"
 
 main = (...) ->
 	interpret "prelude.spl"
