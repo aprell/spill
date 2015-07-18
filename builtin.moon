@@ -1,4 +1,4 @@
-import reverse, newseq from require "util"
+import reverse, newseq, raise from require "util"
 
 words = {}
 
@@ -186,7 +186,8 @@ builtin_words = {
 	-- Index into sequence
 	["!!"]: (s) ->
 		n, seq = s\pop!, s\pop!
-		assert(n > 0 and n <= #seq, "runtime error: index #{n} out of bounds")
+		if n <= 0 or n > #seq
+			raise "!!: index #{n} out of bounds"
 		s\push seq[n]
 
 	-- Apply quotation f to each value v in sequence seq

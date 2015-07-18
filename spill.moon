@@ -1,8 +1,8 @@
-import concat, newseq from require "util"
+import concat, newseq, raise from require "util"
 import words from require "builtin"
 import Stack from require "stack"
 
-import match, sub, gsub from string
+import char, match, sub, gsub from string
 import yield, wrap from coroutine
 
 tokens = {
@@ -16,6 +16,8 @@ COMMENT = "%(%s+.-%s+%)"
 NUMBER  = "[%+%-]?%d+%.*%d*%f[^%w%p]"
 STRING  = "\".-\""
 WORD    = "[^\"']%S*"
+
+underline = (str) -> char(27) .. "[4m" .. str .. char(27) .. "[0m"
 
 next_token = (input) ->
 	-- Skip whitespace
@@ -31,7 +33,8 @@ next_token = (input) ->
 		return tokens.WORD, tok, sub(input, #tok+1)
 	-- Empty input?
 	if #input == 0 then return tokens.END
-	error "next_token: unknown token"
+	inv_tok, rest = sub(input, 1, 1), sub(input, 2)
+	raise "next_token: failed to match #{underline inv_tok}#{rest}"
 
 -- Tokenizer coroutine
 tokenize = (input) -> wrap ->
@@ -72,7 +75,8 @@ parse = (toks, delim) ->
 			actions[#actions+1] = "__push"
 			for t, v in toks
 				if v == "}" then break
-				assert(t == tokens.NUMBER, "#{v} is not a number")
+				if t ~= tokens.NUMBER
+					raise "parse: #{v} is not a number"
 				seq[#seq+1] = v
 			actions[#actions+1] = seq
 		elseif val == "if"
@@ -109,7 +113,8 @@ eval = (actions) ->
 		elseif a == "__branch"
 			ip = actions[ip+1]
 		else -- built-in or user-defined word
-			assert(words[a], "#{a} is undefined")
+			if words[a] == nil
+				raise "eval: #{a} is undefined"
 			words[a] ds
 			ip = ip+1
 	return

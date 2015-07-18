@@ -12,4 +12,7 @@ concat = (list, sep = " ") ->
 
 newseq = -> setmetatable {}, {__tostring: (seq) -> "{ #{concat seq} }"}
 
-{ :reverse, :concat, :newseq }
+raise = (err_msg) ->
+	error setmetatable {reason: err_msg}, {__tostring: (err) -> err.reason}
+
+{ :reverse, :concat, :newseq, :raise }

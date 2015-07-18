@@ -4,7 +4,9 @@ import words from require "builtin"
 interpret = (filename) ->
 	file = assert(io.open filename)
 	inp = file\read "*all"
-	if #inp > 0 then io.write eval parse tokenize inp
+	if #inp > 0
+		ok, err = pcall -> eval parse tokenize inp
+		if not ok then print err
 	file\close!
 
 -- Read-eval-print loop
@@ -16,7 +18,8 @@ repl = (prompt = "spill> ") ->
 			io.write "\n"
 			break
 		if #inp > 0
-			io.write eval parse tokenize inp
+			ok, err = pcall -> eval parse tokenize inp
+			if not ok then print err
 			io.write "Data stack: ", ds\dump!, "\n"
 
 main = (...) ->

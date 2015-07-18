@@ -1,10 +1,14 @@
-import concat from require "util"
+import concat, raise from require "util"
 
 class Stack
 	new: => @elems = {}
 	push: (val) => @elems[#@elems+1] = val
-	pop: => table.remove(@elems)
-	top: => @elems[#@elems]
+	pop: =>
+		if @isempty! then raise "pop: stack empty"
+		table.remove(@elems)
+	top: =>
+		if @isempty! then raise "top: stack empty"
+		@elems[#@elems]
 	isempty: => #@elems == 0
 	dump: => "[#{concat @elems, ", "}]"
 
@@ -13,4 +17,4 @@ class Queue extends Stack
 	deq: => table.remove @elems, 1
 	front: => @elems[1]
 
-{ :Stack, :Queue }
+{ :Stack }
