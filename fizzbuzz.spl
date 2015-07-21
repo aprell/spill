@@ -1,0 +1,7 @@
+: fizzbuzz
+  dup 15 mult? if "FizzBuzz" . else
+  dup 3 mult? if "Fizz" . else
+  dup 5 mult? if "Buzz" . else
+  print then then then ;
+
+1 15 [a,b] [ fizzbuzz ] each

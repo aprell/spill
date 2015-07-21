@@ -70,12 +70,4 @@
 ( : mean dup sum swap length / ; )
 : mean [ sum ] [ length ] bi / ;
 
-: fizzbuzz
-  dup 15 mult? if drop "FizzBuzz" . else
-	dup 3 mult? if drop "Fizz" . else
-	  dup 5 mult? if drop "Buzz" . else . then
-    then
-  then
-;
-
 : 2dip swap [ dip ] dip ;
