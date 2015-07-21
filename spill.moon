@@ -5,41 +5,31 @@ import Stack from require "stack"
 import char, match, sub, gsub from string
 import yield, wrap from coroutine
 
-tokens = {
-	NUMBER: "number",
-	STRING: "string",
-	WORD:   "word",
-	END:    "end"
+TOKENS = {
+	comment: "%(%s+.-%s+%)",
+	number:  "[%+%-]?%d+%.*%d*%f[^%w%p]",
+	string:  "\".-\"",
+	word:    "%S+"
 }
-
-COMMENT = "%(%s+.-%s+%)"
-NUMBER  = "[%+%-]?%d+%.*%d*%f[^%w%p]"
-STRING  = "\".-\""
-WORD    = "[^\"']%S*"
-
-underline = (str) -> char(27) .. "[4m" .. str .. char(27) .. "[0m"
 
 next_token = (input) ->
 	-- Skip whitespace
 	input = gsub input, "^%s*", ""
 	-- Skip comment
-	if cmt = match input, "^"..COMMENT
+	if cmt = match input, "^"..TOKENS.comment
 		return next_token sub(input, #cmt+1)
-	if tok = match input, "^"..NUMBER
-		return tokens.NUMBER, tonumber(tok), sub(input, #tok+1)
-	if tok = match input, "^"..STRING
-		return tokens.STRING, tok, sub(input, #tok+1)
-	if tok = match input, "^"..WORD
-		return tokens.WORD, tok, sub(input, #tok+1)
-	-- Empty input?
-	if #input == 0 then return tokens.END
-	inv_tok, rest = sub(input, 1, 1), sub(input, 2)
-	raise "next_token: failed to match #{underline inv_tok}#{rest}"
+	if tok = match input, "^"..TOKENS.number
+		return "number", tonumber(tok), sub(input, #tok+1)
+	if tok = match input, "^"..TOKENS.string
+		return "string", tok, sub(input, #tok+1)
+	if tok = match input, "^"..TOKENS.word
+		return "word", tok, sub(input, #tok+1)
+	assert(#input == 0) and "<end>"
 
 -- Tokenizer coroutine
 tokenize = (input) -> wrap ->
 	tok, val, rest = next_token input
-	while tok != tokens.END
+	while tok != "<end>"
 		yield tok, val
 		tok, val, rest = next_token rest
 
@@ -56,7 +46,7 @@ parse = (toks, delim) ->
 		if delim and val == delim
 			-- actions() calls eval(actions)
 			return setmetatable actions, {__call: eval}
-		if tok == tokens.NUMBER or tok == tokens.STRING
+		if tok == "number" or tok == "string"
 			actions[#actions+1] = "__push"
 			actions[#actions+1] = val
 		-- tok == tokens.WORD
@@ -75,7 +65,7 @@ parse = (toks, delim) ->
 			actions[#actions+1] = "__push"
 			for t, v in toks
 				if v == "}" then break
-				if t ~= tokens.NUMBER
+				if t ~= "number"
 					raise "parse: #{v} is not a number"
 				seq[#seq+1] = v
 			actions[#actions+1] = seq
