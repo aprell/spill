@@ -49,7 +49,7 @@ parse = (toks, delim) ->
 		if tok == "number" or tok == "string"
 			actions[#actions+1] = "__push"
 			actions[#actions+1] = val
-		-- tok == tokens.WORD
+		-- tok == "word"
 		elseif val == ":"
 			for _, w in toks
 				words[w] = parse toks, ";"
