@@ -20,7 +20,7 @@ repl = (prompt = "spill> ") ->
 		if #inp > 0
 			ok, err = pcall -> eval parse tokenize inp
 			if not ok then print err
-			io.write "Data stack: ", ds\dump!, "\n"
+			io.write "Data stack: ", tostring(ds), "\n"
 
 main = (...) ->
 	interpret "prelude.spl"

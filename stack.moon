@@ -6,7 +6,7 @@ class Stack
 	pop: => table.remove(@elems) or raise "pop: empty stack"
 	top: => @elems[#@elems] or raise "top: empty stack"
 	isempty: => #@elems == 0
-	dump: => "[#{concat @elems, ", "}]"
+	__tostring: => "[#{concat @elems, ", "}]"
 
 class Queue extends Stack
 	enq: (val) => @push val
