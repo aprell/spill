@@ -91,6 +91,8 @@ builtin_words = {
 	print: (s) -> io.write (tostring s\top!), "\n"
 	-- Print and remove top of stack
 	["."]: (s) -> io.write (tostring s\pop!), "\n"
+	-- Print stack
+	show: (s) -> print s
 	-- Swap topmost elements
 	swap: (s) ->
 		b, a = s\pop!, s\pop!
