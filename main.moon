@@ -23,7 +23,6 @@ repl = (prompt = "spill> ") ->
 
 main = (...) ->
 	interpret "prelude.spl"
-	args = {...}
-	if #args > 0 then interpret args[1] else repl!
+	if #arg > 0 then interpret arg[1] else repl!
 
 main ...
