@@ -1,4 +1,6 @@
-import tokenize, parse, eval from require "spill"
+package.moonpath = "src/?.moon;" .. package.moonpath
+
+import tokenize, parse, eval from require "core"
 import words from require "builtin"
 
 interpret = (filename) ->
@@ -22,7 +24,7 @@ repl = (prompt = "spill> ") ->
 			if not ok then print err
 
 main = (...) ->
-	interpret "prelude.spl"
+	interpret "src/prelude.spl"
 	if #arg > 0 then interpret arg[1] else repl!
 
 main ...

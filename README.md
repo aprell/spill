@@ -5,14 +5,11 @@ spill is a tiny stack-based programming language borrowing ideas from Forth
 and Factor. The interpreter is written in the
 [MoonScript](http://moonscript.org) dialect of Lua.
 
-spill is meant for learning and messing around. You should not attempt to use it
-for anything serious.
-
 Examples
 --------
 
 Make sure to have MoonScript installed before starting the REPL with
-`./spill.sh`.
+`./spill`.
 
 Say hello:
 
@@ -51,7 +48,7 @@ spill> [ 3 0 > if "yes" else "no" then . ] spill show
 [__push, 3, __push, 0, >, __branch?, 12, __push, "yes", __branch, 14, __push, "no", .]
 ```
 
-Check `prelude.spl` for more examples.
+Check `src/prelude.spl` for more examples.
 
 TODO
 ----

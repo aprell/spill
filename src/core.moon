@@ -1,4 +1,4 @@
-import concat, newseq, raise from require "util"
+import concat, newseq, raise from require "utils"
 import words from require "builtin"
 import Stack from require "stack"
 

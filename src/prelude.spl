@@ -5,6 +5,9 @@
 (   10 begin dup . 1 - dup 0 = until clear "ZERO" . )
 (   1 begin dup factorial . 1 + dup 10 > until clear )
 
+( Testing )
+(   : TEST over = 0 = if "FAIL" else "PASS" then . ; )
+
 : inc 1 + ;
 
 : dec 1 - ;

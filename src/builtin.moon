@@ -1,4 +1,4 @@
-import reverse, newseq, raise from require "util"
+import reverse, newseq, raise from require "utils"
 
 words = {}
 

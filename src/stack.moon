@@ -1,4 +1,4 @@
-import concat, raise from require "util"
+import concat, raise from require "utils"
 
 class Stack
 	new: => @elems = {}
