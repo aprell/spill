@@ -198,8 +198,17 @@ def drop(stack):
     #clear: (s) -> while not s\isempty! do s\pop!
     #-- Print top of stack
     #print: (s) -> io.write (tostring s\top!), "\n"
+
+@builtin("print")
+def print_top(stack):
+    print(stack[-1])
+
     #-- Print and remove top of stack
     #["."]: (s) -> io.write (tostring s\pop!), "\n"
+
+@builtin(".")
+def print_pop(stack):
+    print(stack.pop())
 
     #-- Print stack
     #show: (s) -> print s
@@ -233,8 +242,21 @@ def show(stack):
     #elems: (s) -> s\push #s.elems
     #-- Push data onto stack
     #__push: (s, d) -> s\push d
+
+@builtin("__push")
+def __push(stack, data):
+    stack.append(data)
+
     #-- Conditional branch: branch on false
     #__branch: (s) -> if s\pop! == 0 then true else false
+
+@builtin("__branch")
+def __branch(stack):
+    if stack.pop() == 0:
+        return True
+    else:
+        return False
+
     #-- Conditional branch: branch on true
     #-- TODO
 

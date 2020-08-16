@@ -29,6 +29,9 @@ class Sequence:
     def __str__(self):
         return f"{{ {concat(self.seq)} }}"
 
+    def append(self, value):
+        self.seq.append(value)
+
 #raise = (err_msg) ->
 #	error setmetatable {reason: err_msg}, {__tostring: (err) -> err.reason}
 #
