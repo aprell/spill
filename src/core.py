@@ -20,7 +20,7 @@ import re
 TOKENS = {
     "comment": re.compile(r"\(.*\)"),
     "number": re.compile(r"[+-]?\d+(\.\d*)?\b"),
-    "string": re.compile(r"\".*\""),
+    "string": re.compile(r"\"(.*)\""),
     "word": re.compile(r"\S+")
 }
 
@@ -48,9 +48,11 @@ class Token:
 
 def next_token(input):
     inp = input.lstrip()
+
     match = TOKENS["comment"].match(inp)
     if match:
         return next_token(inp[match.end():])
+
     match = TOKENS["number"].match(inp)
     if match:
         num = match.group()
@@ -59,12 +61,15 @@ def next_token(input):
         except ValueError:
             num = float(num)
         return Token("number", num), inp[match.end():]
+
     match = TOKENS["string"].match(inp)
     if match:
-        return Token("string", match.group()), inp[match.end():]
+        return Token("string", match.group(1)), inp[match.end():]
+
     match = TOKENS["word"].match(inp)
     if match:
         return Token("word", match.group()), inp[match.end():]
+
     assert not inp
     return Token("EOF", None), inp
 
