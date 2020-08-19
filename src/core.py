@@ -18,7 +18,7 @@ import re
 #}
 
 TOKENS = {
-    "comment": re.compile(r"\(.*\)"),
+    "comment": re.compile(r"\(\s+.*\s+\)"),
     "number": re.compile(r"[+-]?\d+(\.\d*)?\b"),
     "string": re.compile(r"\"(.*)\""),
     "word": re.compile(r"\S+")
