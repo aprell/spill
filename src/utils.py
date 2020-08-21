@@ -26,11 +26,17 @@ class Sequence:
     def __iter__(self):
         return iter(self.seq)
 
+    def __len__(self):
+        return len(self.seq)
+
     def __str__(self):
         return f"{{ {concat(self.seq)} }}"
 
     def append(self, value):
         self.seq.append(value)
+
+    def reverse(self):
+        self.seq.reverse()
 
 #raise = (err_msg) ->
 #	error setmetatable {reason: err_msg}, {__tostring: (err) -> err.reason}
