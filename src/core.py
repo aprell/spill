@@ -6,9 +6,8 @@
 #import yield, wrap from coroutine
 
 from builtin import words
-from utils import Sequence
-
 import re
+import utils
 
 #TOKENS = {
 #	comment: "%(%s+.-%s+%)",
@@ -150,17 +149,17 @@ def parse(tokens, delim=None):
 
     for token in tokens:
         if delim and token.value == delim:
-            return cmds
+            return lambda _: evaluate(cmds)
         if token.ty == "number" or token.ty == "string":
             cmds += ["__push", token.value]
         elif token.value == ":":
-            word = next(tokens)
-            words[word] = parse(tokens, delim=";")
+            name = next(tokens).value
+            words[name] = parse(tokens, delim=";")
         elif token.value == "[":
             cmds += ["__push", parse(tokens, delim="]")]
         elif token.value == "{":
             cmds.append("__push")
-            seq = Sequence()
+            seq = utils.Sequence()
             for token in tokens:
                 if token.value == "}":
                     break
@@ -170,15 +169,15 @@ def parse(tokens, delim=None):
             cmds.append(seq)
         elif token.value == "if":
             cmds += ["__branch?", "<jmp>"]
-            ctrl_stack.append(len(cmds))
+            ctrl_stack.append(len(cmds) - 1)
         elif token.value == "else":
             cmds += ["__branch", "<jmp>"]
-            cmds[ctrl_stack.pop()] = len(cmds) + 1
-            ctrl_stack.append(len(cmds))
+            cmds[ctrl_stack.pop()] = len(cmds)
+            ctrl_stack.append(len(cmds) - 1)
         elif token.value == "then":
-            cmds[ctrl_stack.pop()] = len(cmds) + 1
+            cmds[ctrl_stack.pop()] = len(cmds)
         elif token.value == "begin":
-            ctrl_stack.append(len(cmds) + 1)
+            ctrl_stack.append(len(cmds))
         elif token.value == "until":
             cmds += ["__branch?", ctrl_stack.pop()]
         else:
