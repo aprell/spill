@@ -144,12 +144,28 @@ ctrl_stack = []
 #			actions[#actions+1] = val
 #	actions
 
+class Commands:
+    def __init__(self, lst=[]):
+        self.cmds = lst
+
+    def __call__(self, _):
+        evaluate(self.cmds)
+
+    def __iter__(self):
+        return iter(self.cmds)
+
+    def __len__(self):
+        return len(self.cmds)
+
+    def __str__(self):
+        return f"[ {utils.concat(self.cmds)} ]"
+
 def parse(tokens, delim=None):
     cmds = []
 
     for token in tokens:
         if delim and token.value == delim:
-            return lambda _: evaluate(cmds)
+            return Commands(cmds)
         if token.ty == "number" or token.ty == "string":
             cmds += ["__push", token.value]
         elif token.value == ":":
