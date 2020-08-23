@@ -68,3 +68,4 @@ References
 - [Beginning Factor - Introduction](http://elasticdog.com/2008/11/beginning-factor-introduction)
 - [Beginning Factor - Shufflers & Combinators](http://elasticdog.com/2008/12/beginning-factor-shufflers-and-combinators)
 - [A panoramic tour of Factor](http://andreaferretti.github.io/factor-tutorial)
+- [A simple Python token scanner](https://gist.github.com/blinks/47989)
