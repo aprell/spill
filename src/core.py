@@ -2,56 +2,58 @@ from builtin import words
 import re
 import utils
 
-TOKENS = {
-    "comment": re.compile(r"\(\s+.*\s+\)"),
-    "number": re.compile(r"[+-]?\d+(\.\d*)?\b"),
-    "string": re.compile(r"\"(.*?)\""),
-    "word": re.compile(r"\S+")
-}
-
 class Token:
-    def __init__(self, ty, value):
-        self.ty = ty
-        self.value = value
+    def __init__(self, match):
+        self.type = match.lastgroup
+        self.value = match.group()
+        if self.type == "NUMBER":
+            try:
+                self.value = int(self.value)
+            except ValueError:
+                self.value = float(self.value)
+        elif self.type == "STRING":
+            self.value = self.value[1:-1]
 
     def __repr__(self):
-        return f"Token({self.ty}, {self.value})"
+        return f"Token({self.type}: {self.value})"
 
-def next_token(input):
-    # Skip whitespace
-    inp = input.lstrip()
+class Tokenizer:
+    def __init__(self, **tokens):
+        self.tokens = tokens
+        self.__compile()
+        self.ignores = set()
 
-    # Skip comment
-    match = TOKENS["comment"].match(inp)
-    if match:
-        return next_token(inp[match.end():])
+    def __compile(self):
+        self.regex = re.compile("|".join(
+            f"(?P<{name}>{pattern})" for name, pattern in self.tokens.items()
+        ))
 
-    match = TOKENS["number"].match(inp)
-    if match:
-        num = match.group()
-        try:
-            num = int(num)
-        except ValueError:
-            num = float(num)
-        return Token("number", num), inp[match.end():]
+    def __call__(self, string):
+        while string:
+            # Skip whitespace
+            string = string.lstrip()
+            match = self.regex.match(string)
+            if match:
+                string = string[match.end():]
+                # Skip comments
+                if match.lastgroup not in self.ignores:
+                    yield Token(match)
+            else:
+                assert not string
 
-    match = TOKENS["string"].match(inp)
-    if match:
-        return Token("string", match.group(1)), inp[match.end():]
+    def ignore(self, name):
+        self.ignores.add(name)
 
-    match = TOKENS["word"].match(inp)
-    if match:
-        return Token("word", match.group()), inp[match.end():]
-
-    assert not inp
-    return Token("EOF", None), inp
-
-def tokenize(input):
+def tokenize(string):
     "Yield tokens from input string"
-    token, input = next_token(input)
-    while token.ty != "EOF":
-        yield token
-        token, input = next_token(input)
+    tokenizer = Tokenizer(
+        COMMENT=r"\(\s+.*\s+\)",
+        NUMBER=r"[+-]?\d+(?:\.\d*)?\b",
+        STRING=r"\".*?\"",
+        WORD=r"\S+"
+    )
+    tokenizer.ignore("COMMENT")
+    return (token for token in tokenizer(string))
 
 data_stack = []
 ctrl_stack = []
@@ -79,7 +81,7 @@ def parse(tokens, delim=None):
     for token in tokens:
         if delim and token.value == delim:
             return Commands(cmds)
-        if token.ty == "number" or token.ty == "string":
+        if token.type == "NUMBER" or token.type == "STRING":
             cmds += ["__push", token.value]
         elif token.value == ":":
             name = next(tokens).value
@@ -92,7 +94,7 @@ def parse(tokens, delim=None):
             for token in tokens:
                 if token.value == "}":
                     break
-                if token.ty != "number":
+                if token.type != "NUMBER":
                     raise RuntimeError(f"parse: {token.value} is not a number")
                 seq.append(token.value)
             cmds.append(seq)
