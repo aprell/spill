@@ -20,7 +20,7 @@ def repl(prompt="spill> "):
         print()
 
 def main(argv):
-    interpret("src/prelude.spl")
+    interpret("src/prelude.spill")
     if len(argv) > 1:
         interpret(argv[1])
     else:
