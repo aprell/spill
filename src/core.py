@@ -47,7 +47,7 @@ class Tokenizer:
 def tokenize(string):
     "Yield tokens from input string"
     tokenizer = Tokenizer(
-        COMMENT=r"\(\s+.*\s+\)",
+        COMMENT=r"\(\s+[^\)]*\s+\)",
         NUMBER=r"[+-]?\d+(?:\.\d*)?\b",
         STRING=r"\".*?\"",
         WORD=r"\S+"
