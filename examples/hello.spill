@@ -1,1 +1,5 @@
 "Hello, spill!" print
+
+(
+  CHECK: Hello, spill!
+)

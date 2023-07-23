@@ -5,3 +5,21 @@
   print then then then ;
 
 1 15 [a,b] [ fizzbuzz ] each
+
+(
+  CHECK: 1
+  CHECK: 2
+  CHECK: Fizz
+  CHECK: 4
+  CHECK: Buzz
+  CHECK: Fizz
+  CHECK: 7
+  CHECK: 8
+  CHECK: Fizz
+  CHECK: Buzz
+  CHECK: 11
+  CHECK: Fizz
+  CHECK: 13
+  CHECK: 14
+  CHECK: FizzBuzz
+)
