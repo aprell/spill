@@ -59,8 +59,8 @@ data_stack = []
 ctrl_stack = []
 
 class Commands:
-    def __init__(self, lst=[]):
-        self.cmds = lst
+    def __init__(self, lst=None):
+        self.cmds = lst if lst else []
 
     def __call__(self, _):
         evaluate(self.cmds)

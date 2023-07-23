@@ -6,8 +6,8 @@ def concat(lst, sep=" "):
     return sep.join(str(i) for i in lst)
 
 class Sequence:
-    def __init__(self, lst=[]):
-        self.seq = lst
+    def __init__(self, lst=None):
+        self.seq = lst if lst else []
 
     def __iter__(self):
         return iter(self.seq)
