@@ -7,7 +7,14 @@ def interpret(filename):
     with open(filename, "rt") as file:
         inp = file.read()
         if inp:
-            evaluate(parse(tokenize(inp)))
+            try:
+                evaluate(parse(tokenize(inp)))
+            except IndexError as err:
+                assert str(err) == "pop from empty list"
+                print("Error: empty stack")
+            except RuntimeError as err:
+                print("Error in", err)
+
 
 def repl(prompt="spill> "):
     "The spill read-eval-print loop"
@@ -15,7 +22,13 @@ def repl(prompt="spill> "):
         while True:
             inp = input(prompt)
             if inp:
-                evaluate(parse(tokenize(inp)))
+                try:
+                    evaluate(parse(tokenize(inp)))
+                except IndexError as err:
+                    assert str(err) == "pop from empty list"
+                    print("Error: empty stack")
+                except RuntimeError as err:
+                    print("Error in", err)
     except EOFError:
         print()
 

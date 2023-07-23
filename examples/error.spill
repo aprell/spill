@@ -1,0 +1,5 @@
+1 2 + x
+
+(
+  CHECK: Error in eval: x is undefined
+)
