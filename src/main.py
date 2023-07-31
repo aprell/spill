@@ -3,6 +3,7 @@
 from core import tokenize, parse, evaluate
 import sys
 
+
 def interpret(filename):
     with open(filename, "rt") as file:
         inp = file.read()
@@ -32,12 +33,14 @@ def repl(prompt="spill> "):
     except EOFError:
         print()
 
+
 def main(argv):
     interpret("src/prelude.spill")
     if len(argv) > 1:
         interpret(argv[1])
     else:
         repl()
+
 
 if __name__ == "__main__":
     main(sys.argv)

@@ -2,8 +2,10 @@ def reverse(lst):
     lst.reverse()
     return lst
 
+
 def concat(lst, sep=" "):
     return sep.join(str(i) for i in lst)
+
 
 class Sequence:
     def __init__(self, lst=None):

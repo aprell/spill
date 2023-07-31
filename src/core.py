@@ -2,6 +2,7 @@ from builtin import words
 import re
 import utils
 
+
 class Token:
     def __init__(self, match):
         self.type = match.lastgroup
@@ -16,6 +17,7 @@ class Token:
 
     def __repr__(self):
         return f"Token({self.type}: {self.value})"
+
 
 class Tokenizer:
     def __init__(self, **tokens):
@@ -44,6 +46,7 @@ class Tokenizer:
     def ignore(self, name):
         self.ignores.add(name)
 
+
 def tokenize(string):
     "Yield tokens from input string"
     tokenizer = Tokenizer(
@@ -55,8 +58,10 @@ def tokenize(string):
     tokenizer.ignore("COMMENT")
     return (token for token in tokenizer(string))
 
+
 data_stack = []
 ctrl_stack = []
+
 
 class Commands:
     def __init__(self, lst=None):
@@ -73,6 +78,7 @@ class Commands:
 
     def __repr__(self):
         return f"[ {utils.concat(self.cmds)} ]"
+
 
 def parse(tokens, delim=None):
     "Turn tokens into a list of commands to evaluate"
@@ -116,9 +122,10 @@ def parse(tokens, delim=None):
 
     return cmds
 
+
 def evaluate(cmds):
     "Evaluate list of commands"
-    ip = 0 # "Instruction pointer"
+    ip = 0  # "Instruction pointer"
     while ip < len(cmds):
         cmd = cmds[ip]
         if cmd == "__push":
