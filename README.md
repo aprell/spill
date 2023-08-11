@@ -1,13 +1,11 @@
-spill
-=====
+# spill
 
 spill is a tiny stack-based programming language that borrows ideas from Forth
 and Factor. The interpreter is written in Python.
 A [previous version](https://github.com/aprell/spill/tree/5a2546a) of spill
 was implemented in the [MoonScript](http://moonscript.org) dialect of Lua.
 
-Examples
---------
+## Examples
 
 Start the REPL with `./spill`.
 
@@ -50,8 +48,7 @@ spill> [ 3 0 > if "yes" else "no" then . ] spill show
 
 Check `src/prelude.spill` for more examples.
 
-TODO
-----
+## TODO
 
 Stuff that could be added to make the language more useful:
 - Stack effect comments
@@ -60,13 +57,17 @@ Stuff that could be added to make the language more useful:
 - Map/dictionary data type
 - Vocabularies of words
 
-References
-----------
+## References
 
+### Forth
 - [My history with Forth & stack machines](http://yosefk.com/blog/my-history-with-forth-stack-machines.html)
 - [A simple stack-oriented language](http://www.openbookproject.net/py4fun/forth/forth.html)
+- [Forth: The programming language that writes itself](http://ratfactor.com/forth/the_programming_language_that_writes_itself.html)
+
+### Factor
 - [Beginning Factor - Introduction](http://elasticdog.com/2008/11/beginning-factor-introduction)
 - [Beginning Factor - Shufflers & Combinators](http://elasticdog.com/2008/12/beginning-factor-shufflers-and-combinators)
 - [A panoramic tour of Factor](http://andreaferretti.github.io/factor-tutorial)
+
+### Other
 - [A simple Python token scanner](https://gist.github.com/blinks/47989)
-- [Forth: The programming language that writes itself](http://ratfactor.com/forth/the_programming_language_that_writes_itself.html)
