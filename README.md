@@ -1,7 +1,7 @@
 # spill
 
-spill is a tiny stack-based programming language that borrows ideas from Forth
-and Factor. The interpreter is written in Python.
+spill is a tiny stack-based programming language that borrows ideas from
+[Forth](#forth) and [Factor](#factor). The interpreter is written in Python.
 A [previous version](https://github.com/aprell/spill/tree/5a2546a) of spill
 was implemented in the [MoonScript](http://moonscript.org) dialect of Lua.
 
