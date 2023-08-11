@@ -2,6 +2,7 @@ import math
 import utils
 
 words = {}
+memory = {}
 
 
 def builtin(name):
@@ -264,6 +265,20 @@ def builtin___branch(stack):
         return True
     else:
         return False
+
+
+@builtin("@")
+def builtin_get(stack):
+    "Get value of variable"
+    stack.append(memory[stack.pop()])
+
+
+@builtin("!")
+def builtin_set(stack):
+    "Set value of variable"
+    var = stack.pop()
+    val = stack.pop()
+    memory[var] = val
 
 #
 # COMBINATORS

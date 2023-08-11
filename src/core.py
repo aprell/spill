@@ -1,4 +1,4 @@
-from builtin import words
+from builtin import words, memory
 import re
 import utils
 
@@ -132,12 +132,17 @@ def evaluate(cmds):
             words["__push"](data_stack, cmds[ip+1])
             ip += 2
         elif cmd == "__branch":
-            ip = cmds[ip+1]
+            ip = cmds[ip + 1]
         elif cmd == "__branch?":
             if words["__branch"](data_stack):
-                ip = cmds[ip+1]
+                ip = cmds[ip + 1]
             else:
                 ip += 2
+        elif cmd == "variable":
+            var = cmds[ip + 1]
+            words[var] = Commands(["__push", var])
+            memory[var] = None  # Uninitialized
+            ip += 2
         else:
             # Built-in or user-defined word
             try:

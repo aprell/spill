@@ -1,12 +1,12 @@
-( Conditionals )
-(   10 0 > if "pos" else "neg" then . )
+( Conditionals
+  10 0 > if "pos" else "neg" then . )
 
-( Loops )
-(   10 begin dup . 1 - dup 0 = until clear "ZERO" . )
-(   1 begin dup factorial . 1 + dup 10 > until clear )
+( Loops
+  10 begin dup . 1 - dup 0 = until clear "ZERO" .
+  1 begin dup factorial . 1 + dup 10 > until clear )
 
-( Testing )
-(   : TEST over = 0 = if "FAIL" else "PASS" then . ; )
+( Testing
+  : TEST over = 0 = if "FAIL" else "PASS" then . ; )
 
 : inc 1 + ;
 
@@ -74,3 +74,5 @@
 : mean [ sum ] [ length ] bi / ;
 
 : 2dip swap [ dip ] dip ;
+
+: ? @ . ;

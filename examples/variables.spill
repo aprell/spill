@@ -1,0 +1,24 @@
+( http://ratfactor.com/forth/the_programming_language_that_writes_itself.html )
+
+variable color
+
+variable reds
+: red reds color ! ;
+
+variable greens
+: green greens color ! ;
+
+: apples color @ ;
+
+20 red apples !
+30 green apples !
+
+red apples ?
+green apples ?
+apples ?
+
+(
+  CHECK: 20
+  CHECK: 30
+  CHECK: 30
+)
