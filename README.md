@@ -69,3 +69,4 @@ References
 - [Beginning Factor - Shufflers & Combinators](http://elasticdog.com/2008/12/beginning-factor-shufflers-and-combinators)
 - [A panoramic tour of Factor](http://andreaferretti.github.io/factor-tutorial)
 - [A simple Python token scanner](https://gist.github.com/blinks/47989)
+- [Forth: The programming language that writes itself](http://ratfactor.com/forth/the_programming_language_that_writes_itself.html)
