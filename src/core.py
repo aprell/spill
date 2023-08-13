@@ -1,4 +1,5 @@
 from builtin import words, memory
+from builtin import builtin_push, builtin_0branch
 import re
 import utils
 
@@ -88,14 +89,14 @@ def parse(tokens, delim=None):
         if delim and token.value == delim:
             return Commands(cmds)
         if token.type == "NUMBER" or token.type == "STRING":
-            cmds += ["__push", token.value]
+            cmds += ["push", token.value]
         elif token.value == ":":
             name = next(tokens).value
             words[name] = parse(tokens, delim=";")
         elif token.value == "[":
-            cmds += ["__push", parse(tokens, delim="]")]
+            cmds += ["push", parse(tokens, delim="]")]
         elif token.value == "{":
-            cmds.append("__push")
+            cmds.append("push")
             seq = utils.Sequence()
             for token in tokens:
                 if token.value == "}":
@@ -105,10 +106,10 @@ def parse(tokens, delim=None):
                 seq.append(token.value)
             cmds.append(seq)
         elif token.value == "if":
-            cmds += ["__branch?", "<jmp>"]
+            cmds += ["branch?", "<jmp>"]
             ctrl_stack.append(len(cmds) - 1)
         elif token.value == "else":
-            cmds += ["__branch", "<jmp>"]
+            cmds += ["branch", "<jmp>"]
             cmds[ctrl_stack.pop()] = len(cmds)
             ctrl_stack.append(len(cmds) - 1)
         elif token.value == "then":
@@ -116,7 +117,7 @@ def parse(tokens, delim=None):
         elif token.value == "begin":
             ctrl_stack.append(len(cmds))
         elif token.value == "until":
-            cmds += ["__branch?", ctrl_stack.pop()]
+            cmds += ["branch?", ctrl_stack.pop()]
         else:
             cmds.append(token.value)
 
@@ -128,19 +129,16 @@ def evaluate(cmds):
     ip = 0  # "Instruction pointer"
     while ip < len(cmds):
         cmd = cmds[ip]
-        if cmd == "__push":
-            words["__push"](data_stack, cmds[ip+1])
+        if cmd == "push":
+            builtin_push(data_stack, cmds[ip + 1])
             ip += 2
-        elif cmd == "__branch":
+        elif cmd == "branch":
             ip = cmds[ip + 1]
-        elif cmd == "__branch?":
-            if words["__branch"](data_stack):
-                ip = cmds[ip + 1]
-            else:
-                ip += 2
+        elif cmd == "branch?":
+            ip = builtin_0branch(data_stack, cmds[ip + 1], ip + 2)
         elif cmd == "variable":
             var = cmds[ip + 1]
-            words[var] = Commands(["__push", var])
+            words[var] = Commands(["push", var])
             memory[var] = None  # Uninitialized
             ip += 2
         else:

@@ -253,18 +253,18 @@ def builtin_elems(stack):
     stack.append(len(stack))
 
 
-@builtin("__push")
-def builtin___push(stack, data):
+@builtin("push")
+def builtin_push(stack, data):
     stack.append(data)
 
 
-@builtin("__branch")
-def builtin___branch(stack):
+@builtin("0branch")
+def builtin_0branch(stack, yes, no):
     "Conditional branch (branch if false)"
     if stack.pop() == 0:
-        return True
+        return yes
     else:
-        return False
+        return no
 
 
 @builtin("@")
