@@ -43,7 +43,7 @@ Inspect generated "bytecode":
 
 ```
 spill> [ 3 0 > if "yes" else "no" then . ] spill show
-[__push, 3, __push, 0, >, __branch?, 11, __push, yes, __branch, 13, __push, no, .]
+[push, 3, push, 0, >, branch?, 11, push, yes, branch, 13, push, no, .]
 ```
 
 Check `src/prelude.spill` for more examples.
