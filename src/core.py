@@ -61,7 +61,6 @@ def parse(string):
 
 
 data_stack = []
-ctrl_stack = []
 
 
 class Commands:
@@ -107,17 +106,17 @@ def compile(tokens, delim=None):
             cmds.append(seq)
         elif token.value == "if":
             cmds += ["branch?", "<jmp>"]
-            ctrl_stack.append(len(cmds) - 1)
+            data_stack.append(len(cmds) - 1)
         elif token.value == "else":
             cmds += ["branch", "<jmp>"]
-            cmds[ctrl_stack.pop()] = len(cmds)
-            ctrl_stack.append(len(cmds) - 1)
+            cmds[data_stack.pop()] = len(cmds)
+            data_stack.append(len(cmds) - 1)
         elif token.value == "then":
-            cmds[ctrl_stack.pop()] = len(cmds)
+            cmds[data_stack.pop()] = len(cmds)
         elif token.value == "begin":
-            ctrl_stack.append(len(cmds))
+            data_stack.append(len(cmds))
         elif token.value == "until":
-            cmds += ["branch?", ctrl_stack.pop()]
+            cmds += ["branch?", data_stack.pop()]
         else:
             cmds.append(token.value)
 
