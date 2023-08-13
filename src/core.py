@@ -48,7 +48,7 @@ class Tokenizer:
         self.ignores.add(name)
 
 
-def tokenize(string):
+def parse(string):
     "Yield tokens from input string"
     tokenizer = Tokenizer(
         COMMENT=r"\(\s+[^\)]*\s+\)",
@@ -69,7 +69,7 @@ class Commands:
         self.cmds = lst if lst else []
 
     def __call__(self, _):
-        evaluate(self.cmds)
+        execute(self.cmds)
 
     def __iter__(self):
         return iter(self.cmds)
@@ -81,8 +81,8 @@ class Commands:
         return f"[ {utils.concat(self.cmds)} ]"
 
 
-def parse(tokens, delim=None):
-    "Turn tokens into a list of commands to evaluate"
+def compile(tokens, delim=None):
+    "Turn tokens into a list of commands to execute"
     cmds = []
 
     for token in tokens:
@@ -92,9 +92,9 @@ def parse(tokens, delim=None):
             cmds += ["push", token.value]
         elif token.value == ":":
             name = next(tokens).value
-            words[name] = parse(tokens, delim=";")
+            words[name] = compile(tokens, delim=";")
         elif token.value == "[":
-            cmds += ["push", parse(tokens, delim="]")]
+            cmds += ["push", compile(tokens, delim="]")]
         elif token.value == "{":
             cmds.append("push")
             seq = utils.Sequence()
@@ -124,8 +124,8 @@ def parse(tokens, delim=None):
     return cmds
 
 
-def evaluate(cmds):
-    "Evaluate list of commands"
+def execute(cmds):
+    "Execute list of commands"
     ip = 0  # "Instruction pointer"
     while ip < len(cmds):
         cmd = cmds[ip]

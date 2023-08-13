@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-from core import tokenize, parse, evaluate
+from core import parse, compile, execute
 import sys
 
 
@@ -9,7 +9,7 @@ def interpret(filename):
         inp = file.read()
         if inp:
             try:
-                evaluate(parse(tokenize(inp)))
+                execute(compile(parse(inp)))
             except IndexError as err:
                 assert str(err) == "pop from empty list"
                 print("Error: empty stack")
@@ -24,7 +24,7 @@ def repl(prompt="spill> "):
             inp = input(prompt)
             if inp:
                 try:
-                    evaluate(parse(tokenize(inp)))
+                    execute(compile(parse(inp)))
                 except IndexError as err:
                     assert str(err) == "pop from empty list"
                     print("Error: empty stack")
