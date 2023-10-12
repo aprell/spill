@@ -70,4 +70,5 @@ Stuff that could be added to make the language more useful:
 - [A panoramic tour of Factor](http://andreaferretti.github.io/factor-tutorial)
 
 ### Other
+- [Concatenative programming and stack-based languages](https://www.youtube.com/watch?v=umSuLpjFUf8) (Strange Loop 2023)
 - [A simple Python token scanner](https://gist.github.com/blinks/47989)
