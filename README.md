@@ -72,3 +72,4 @@ Stuff that could be added to make the language more useful:
 ### Other
 - [Concatenative programming and stack-based languages](https://www.youtube.com/watch?v=umSuLpjFUf8) (Strange Loop 2023)
 - [A simple Python token scanner](https://gist.github.com/blinks/47989)
+- [Building a small REPL in Python](https://bernsteinbear.com/blog/simple-python-repl)
