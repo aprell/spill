@@ -2,6 +2,7 @@
 
 from code import InteractiveConsole
 from core import parse, compile, execute
+import readline
 import sys
 
 
